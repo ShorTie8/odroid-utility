@@ -2,8 +2,13 @@
 
 do_exit() {
 	if [ $REBOOT -eq 1 ]; then
-		whiptail --backtitle "Hardkernel ODROID Utility v$_REV" --msgbox \
-		"You need to reboot your board to the new modifications take effects" 0 0
+            whiptail --backtitle "Hardkernel ODROID Utility v$_REV" --yesno \
+            "You need to reboot your $BOARD so the new modifications will take effect
+                     Would you like to reboot now?" 0 0
+            if [ $? -eq 0 ]; then # yes
+                sync
+                reboot
+            fi
 	fi
 	sync
 	exit 0
